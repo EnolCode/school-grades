@@ -1,0 +1,10 @@
+@use "colors" as c;
+@use "./resetScss.scss";
+
+@media (min-width: 1024px) {
+	body {
+		display: flex;
+		place-items: center;
+		justify-content: center;
+	}
+}
