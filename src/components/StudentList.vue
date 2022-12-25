@@ -2,6 +2,13 @@
 	const props = defineProps({
 		students: Array,
 	});
+const convertCalificationInGrades = (num)=>{
+	if(num <=3) return "Muy deficiente";
+	if(num <5) return "Insuficiente";
+	if(num <=6) return "suficiente";
+	if(num <=8) return "Notable";
+	if(num <=10) return "Sobresaliente";
+}
 </script>
 <template>
 	<div class="container">
@@ -14,14 +21,15 @@
 				</tr>
 			</thead>
 			<tbody class="container__students">
-				<tr v-for="student in students">
+				<tr v-for="student  in students">
 					<td class="container__value">{{ student[0] }}</td>
-					<td class="container__value">{{ student[1] }}</td>
-					<td class="container__value">{{ student[2] }}</td>
+					<td class="container__value">{{ student[1]}}</td>
+					<td class="container__value">{{ convertCalificationInGrades(student[2])}}</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+
 </template>
 
 <style lang="scss">
@@ -49,6 +57,7 @@
 		&__value {
 			text-align: center;
 			padding: 1em 0;
+			color:black;
 		}
 
 		&__students {
@@ -64,5 +73,5 @@
 			}
 		}
 	}
-	// border: solid 1px
+
 </style>
