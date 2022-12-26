@@ -1,14 +1,9 @@
 <script setup>
+import { convertCalificationInGrades } from "@/grades/grades.js";
 	const props = defineProps({
 		students: Array,
 	});
-const convertCalificationInGrades = (num)=>{
-	if(num <=3) return "Muy deficiente";
-	if(num <5) return "Insuficiente";
-	if(num <=6) return "suficiente";
-	if(num <=8) return "Notable";
-	if(num <=10) return "Sobresaliente";
-}
+
 </script>
 <template>
 	<div class="container">

@@ -55,7 +55,7 @@
 			id="score"
 			class="form__input form__input-score"
 			placeholder="Enter a student's score (1-10)"
-			min="0"
+			min="1"
 			max="10"
 			v-model="student.score"
 		/>
@@ -117,8 +117,8 @@
 		.option-black {
 			background: map-get(c.$colors, "very-dark-blue");
 		}
-		.form__select-title {
-			color: grey;
+		.form__select-title:checked {
+			color: white;
 		}
 	}
 </style>
