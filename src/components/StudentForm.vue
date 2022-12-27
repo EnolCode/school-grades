@@ -1,30 +1,78 @@
 <script setup>
-	import { reactive } from "vue";
+	import { reactive, computed } from "vue";
+	import StudentTemplate from "@/students/studentTemplate";
+	import { useVuelidate } from "@vuelidate/core";
+	import {
+		required,
+		minLength,
+		helpers,
+		minValue,
+		maxValue,
+	} from "@vuelidate/validators";
 
 	const student = reactive({
-		name: null,
+		name: "",
 		subject: "Select your option",
-		score: null,
+		score: "",
 	});
+
+	const chooseSubject = value => {
+		return !value.includes("Select your option");
+	};
+
+	const rules = computed(() => {
+		return {
+			name: {
+				required,
+				minLength: minLength(3),
+				$autoDirty: true,
+			},
+			subject: {
+				chooseSubject: helpers.withMessage(
+					"Please, choose a subject",
+					chooseSubject
+				),
+			},
+			score: {
+				required,
+				minValue: minValue(1),
+				maxValue: maxValue(10),
+			},
+		};
+	});
+
+	const v$ = useVuelidate(rules, student);
 
 	let studentList = [];
 
 	const emit = defineEmits(["sendData"]);
 
-	function sendData() {
-		const studentUpdated = [
+	const sendData = async () => {
+		const result = await v$.value.$validate();
+		if (!result) {
+			return;
+		}
+
+		const studentUpdated = new StudentTemplate(
 			student.name,
 			student.subject,
-			student.score,
-		];
+			student.score
+		);
 
 		studentList.push(studentUpdated);
 		emit("sendData", studentList);
-	}
+
+		student.name = "";
+		student.subject = "Select your option";
+		student.score = "";
+	};
 </script>
 
 <template>
-	<div class="form">
+	<form
+		class="form"
+		@submit.prevent="sendData"
+	>
 		<input
 			type="text"
 			name="student"
@@ -32,7 +80,15 @@
 			placeholder="Enter a student's name to check their grade"
 			class="form__input form__input-name"
 			v-model="student.name"
+			@blur="v$.name.$touch"
 		/>
+		<span
+			v-for="error in v$.name.$errors"
+			:key="error.$uid"
+			class="error-red"
+		>
+			{{ error.$message }}
+		</span>
 
 		<select
 			v-model="student.subject"
@@ -48,7 +104,13 @@
 			<option class="option">Math</option>
 			<option class="option">Chemistry</option>
 		</select>
-
+		<span
+			v-for="error in v$.subject.$errors"
+			:key="error.$uid"
+			class="error-red"
+		>
+			{{ error.$message }}
+		</span>
 		<input
 			type="number"
 			name="score"
@@ -59,14 +121,20 @@
 			max="10"
 			v-model="student.score"
 		/>
+		<span
+			v-for="error in v$.score.$errors"
+			:key="error.$uid"
+			class="error-red"
+		>
+			{{ error.$message }}
+		</span>
 		<button
-			@click="sendData"
 			class="form__button"
 			type="submit"
 		>
 			See score
 		</button>
-	</div>
+	</form>
 </template>
 
 <style scoped lang="scss">
@@ -82,7 +150,6 @@
 		align-items: center;
 		justify-content: space-around;
 		border-radius: 5px;
-
 		&__input,
 		&__select,
 		&__button {
@@ -99,7 +166,6 @@
 				background: map-get(c.$colors, "blue-electric");
 			}
 		}
-
 		&__input,
 		.option {
 			color: map-get(c.$colors, "white");
@@ -108,17 +174,18 @@
 			background: map-get(c.$colors, "blue-electric");
 			color: map-get(c.$colors, "white");
 		}
-
 		&__select,
 		&__button {
 			cursor: pointer;
 		}
-
 		.option-black {
 			background: map-get(c.$colors, "very-dark-blue");
 		}
 		.form__select-title:checked {
 			color: white;
+		}
+		.error-red {
+			color: red;
 		}
 	}
 </style>

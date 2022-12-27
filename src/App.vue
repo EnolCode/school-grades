@@ -1,11 +1,5 @@
 <script setup>
-	import {
-		getCurrentInstance,
-		reactive,
-		ref,
-		watchEffect,
-		readonly,
-	} from "vue";
+	import { getCurrentInstance, ref, readonly } from "vue";
 	import { RouterLink, RouterView } from "vue-router";
 	import StudentForm from "./components/StudentForm.vue";
 	import StudentList from "./components/StudentList.vue";

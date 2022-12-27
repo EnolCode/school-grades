@@ -1,9 +1,8 @@
 <script setup>
-import { convertCalificationInGrades } from "@/grades/grades.js";
+	import { convertCalificationInGrades } from "@/grades/grades.js";
 	const props = defineProps({
 		students: Array,
 	});
-
 </script>
 <template>
 	<div class="container">
@@ -16,15 +15,16 @@ import { convertCalificationInGrades } from "@/grades/grades.js";
 				</tr>
 			</thead>
 			<tbody class="container__students">
-				<tr v-for="student  in students">
-					<td class="container__value">{{ student[0] }}</td>
-					<td class="container__value">{{ student[1]}}</td>
-					<td class="container__value">{{ convertCalificationInGrades(student[2])}}</td>
+				<tr v-for="{ name, subject, calification } in students">
+					<td class="container__value">{{ name }}</td>
+					<td class="container__value">{{ subject }}</td>
+					<td class="container__value">
+						{{ convertCalificationInGrades(calification) }}
+					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-
 </template>
 
 <style lang="scss">
@@ -52,7 +52,7 @@ import { convertCalificationInGrades } from "@/grades/grades.js";
 		&__value {
 			text-align: center;
 			padding: 1em 0;
-			color:black;
+			color: black;
 		}
 
 		&__students {
@@ -68,5 +68,4 @@ import { convertCalificationInGrades } from "@/grades/grades.js";
 			}
 		}
 	}
-
 </style>
