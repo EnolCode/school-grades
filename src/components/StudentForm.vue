@@ -1,7 +1,8 @@
 <script setup>
-	import { reactive, computed } from "vue";
+	import { reactive, computed, ref } from "vue";
 	import StudentTemplate from "@/students/studentTemplate";
 	import { useVuelidate } from "@vuelidate/core";
+	import { changeColorSubject, chemistrySubject, mathSubject, historySubject } from "@/colorSubject/ColorSubject.js";
 	import {
 		required,
 		minLength,
@@ -9,6 +10,7 @@
 		minValue,
 		maxValue,
 	} from "@vuelidate/validators";
+
 
 	const student = reactive({
 		name: "",
@@ -25,7 +27,7 @@
 			name: {
 				required,
 				minLength: minLength(3),
-				$autoDirty: true,
+				$lazy: true,
 			},
 			subject: {
 				chooseSubject: helpers.withMessage(
@@ -47,24 +49,32 @@
 
 	const emit = defineEmits(["sendData"]);
 
+	const clearValueInputs = () => {
+		student.name = "",
+		student.subject = "Select your option",  //Se los quise pasar por parametros pero no me respondia (?)
+		student.score = "",
+		v$.value.$reset();
+	};
+
 	const sendData = async () => {
 		const result = await v$.value.$validate();
 		if (!result) {
 			return;
 		}
 
+		
 		const studentUpdated = new StudentTemplate(
 			student.name,
 			student.subject,
 			student.score
-		);
+			);
+						
+		changeColorSubject(student.subject)
 
 		studentList.push(studentUpdated);
 		emit("sendData", studentList);
 
-		student.name = "";
-		student.subject = "Select your option";
-		student.score = "";
+		clearValueInputs();
 	};
 </script>
 
@@ -80,7 +90,6 @@
 			placeholder="Enter a student's name to check their grade"
 			class="form__input form__input-name"
 			v-model="student.name"
-			@blur="v$.name.$touch"
 		/>
 		<span
 			v-for="error in v$.name.$errors"
@@ -92,6 +101,7 @@
 
 		<select
 			v-model="student.subject"
+			:class="{ yellow: mathSubject, blue: historySubject, verde: chemistrySubject}"
 			class="form__select form__select-title"
 		>
 			<option
@@ -150,6 +160,7 @@
 		align-items: center;
 		justify-content: space-around;
 		border-radius: 5px;
+
 		&__input,
 		&__select,
 		&__button {
@@ -157,35 +168,55 @@
 			border-radius: 5px;
 			padding: 1em;
 		}
+
 		&__input,
 		&__select {
 			border: 2px solid map-get(c.$colors, "blue-electric");
 			background: map-get(c.$colors, "dark-blue");
 			color: map-get(c.$colors, "white");
+
 			.option {
 				background: map-get(c.$colors, "blue-electric");
 			}
 		}
+
 		&__input,
 		.option {
 			color: map-get(c.$colors, "white");
 		}
+
 		&__button {
 			background: map-get(c.$colors, "blue-electric");
 			color: map-get(c.$colors, "white");
 		}
+
 		&__select,
 		&__button {
 			cursor: pointer;
 		}
+
 		.option-black {
 			background: map-get(c.$colors, "very-dark-blue");
 		}
+
 		.form__select-title:checked {
 			color: white;
 		}
+
 		.error-red {
 			color: red;
+		}
+
+		.verde{
+			color:green;
+		}
+
+		.yellow{
+			color: yellow;
+		}
+
+		.blue{
+			color:blue;
 		}
 	}
 </style>
