@@ -1,6 +1,7 @@
 <script setup>
 	import { reactive, computed, ref } from "vue";
 	import StudentTemplate from "@/students/studentTemplate";
+	// import { useColorsStore,  } from "@/stores/useColorsSubjects.js"
 	import { useVuelidate } from "@vuelidate/core";
 	import { changeColorSubject, chemistrySubject, mathSubject, historySubject } from "@/colorSubject/ColorSubject.js";
 	import {
@@ -11,6 +12,7 @@
 		maxValue,
 	} from "@vuelidate/validators";
 
+	// const colorsStore = useColorsStore();
 
 	const student = reactive({
 		name: "",
@@ -62,7 +64,6 @@
 			return;
 		}
 
-		
 		const studentUpdated = new StudentTemplate(
 			student.name,
 			student.subject,
@@ -72,7 +73,7 @@
 		changeColorSubject(student.subject)
 
 		studentList.push(studentUpdated);
-		emit("sendData", studentList);
+		emit("sendData", studentList, "changeColorSubject(student.subject)");
 
 		clearValueInputs();
 	};
@@ -103,6 +104,10 @@
 			v-model="student.subject"
 			:class="{ yellow: mathSubject, blue: historySubject, verde: chemistrySubject}"
 			class="form__select form__select-title"
+			name="subject"
+			id="subject"
+
+
 		>
 			<option
 				selected

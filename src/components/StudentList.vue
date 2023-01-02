@@ -1,11 +1,15 @@
 <script setup>
 	import { convertCalificationInGrades } from "@/grades/grades.js";
+	import { ref } from "vue";
+	
 	const props = defineProps({
 		students: Array,
+		datos: {},
 	});
+	
 </script>
 <template>
-	<div class="container">
+	<div v-show="students.length > 0 " class="container">
 		<table class="container__table">
 			<thead>
 				<tr class="container__titles">
@@ -15,9 +19,13 @@
 				</tr>
 			</thead>
 			<tbody class="container__students">
-				<tr v-for="{ name, subject, calification } in students">
+				<tr v-for="{ name, subject, calification } in students" :key="name">
 					<td class="container__value">{{ name }}</td>
-					<td class="container__value">{{ subject }}</td>
+					<td
+						class="container__value"
+					>
+						{{ subject }}
+					</td>
 					<td class="container__value">
 						{{ convertCalificationInGrades(calification) }}
 					</td>
@@ -56,6 +64,9 @@
 		}
 
 		&__students {
+			background: map-get(c.$colors, "grey-blue");
+
+
 			tr {
 				border-bottom: 1px solid map-get(c.$colors, "blue-electric");
 			}
@@ -66,6 +77,18 @@
 			tr:hover {
 				background: map-get(c.$colors, "blue-electric");
 			}
+		}
+
+		.verde{
+			color:green;
+		}
+
+		.yellow{
+			color: yellow;
+		}
+
+		.blue{
+			color:blue;
 		}
 	}
 </style>

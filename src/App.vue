@@ -24,11 +24,13 @@
 	<StudentList
 		:key="componentListKey"
 		:students="studentList"
+		
 	/>
 </template>
 
 <style scoped>
 	body {
+		/* background: url("https://img.freepik.com/vector-gratis/fondo-regreso-escuela-espacio-vacio_23-2148609200.jpg?w=2000")  */
 		width: 100vh;
 		height: 100vh;
 		/* text-align: center; */
