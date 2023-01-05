@@ -7,7 +7,7 @@ Change the color of the text depends on the subject and the grade obtained.
 ![image](https://user-images.githubusercontent.com/116892825/210255050-d8ff692d-22c3-44c7-b940-bf5b3dbc4fcc.png)
 
 ## Resultado interactivo
-![image](https://user-images.githubusercontent.com/116892825/210776536-59090409-854e-4905-a37d-549f29e0c9cc.png)
+![image](https://user-images.githubusercontent.com/116892825/210776786-5b04b6bb-0664-4081-9653-396ac842786e.png)
 
 ### Herramientas utilizadas
 - HTML5 (Metodología BEM)
