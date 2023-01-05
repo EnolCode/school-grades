@@ -68,8 +68,6 @@
 			student.score
 			);
 						
-	
-
 		studentList.push(studentUpdated);
 		emit("sendData", studentList);
 
