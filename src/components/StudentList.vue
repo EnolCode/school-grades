@@ -23,10 +23,14 @@
 					<td class="container__value">{{ name }}</td>
 					<td
 						class="container__value"
+						v-color-subject
 					>
 						{{ subject }}
 					</td>
-					<td class="container__value">
+					<td 
+						class="container__value" 
+						v-color-calification
+					>
 						{{ convertCalificationInGrades(calification) }}
 					</td>
 				</tr>
@@ -61,11 +65,11 @@
 			text-align: center;
 			padding: 1em 0;
 			color: black;
+			font-weight: bold;
 		}
 
 		&__students {
 			background: map-get(c.$colors, "grey-blue");
-
 
 			tr {
 				border-bottom: 1px solid map-get(c.$colors, "blue-electric");
@@ -77,18 +81,6 @@
 			tr:hover {
 				background: map-get(c.$colors, "blue-electric");
 			}
-		}
-
-		.verde{
-			color:green;
-		}
-
-		.yellow{
-			color: yellow;
-		}
-
-		.blue{
-			color:blue;
 		}
 	}
 </style>

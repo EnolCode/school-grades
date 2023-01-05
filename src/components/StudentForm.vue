@@ -1,18 +1,15 @@
 <script setup>
 	import { reactive, computed, ref } from "vue";
 	import StudentTemplate from "@/students/studentTemplate";
-	// import { useColorsStore,  } from "@/stores/useColorsSubjects.js"
 	import { useVuelidate } from "@vuelidate/core";
-	import { changeColorSubject, chemistrySubject, mathSubject, historySubject } from "@/colorSubject/ColorSubject.js";
 	import {
 		required,
 		minLength,
+		maxLength,
 		helpers,
 		minValue,
 		maxValue,
 	} from "@vuelidate/validators";
-
-	// const colorsStore = useColorsStore();
 
 	const student = reactive({
 		name: "",
@@ -29,6 +26,7 @@
 			name: {
 				required,
 				minLength: minLength(3),
+				maxLength: maxLength(18),
 				$lazy: true,
 			},
 			subject: {
@@ -70,10 +68,10 @@
 			student.score
 			);
 						
-		changeColorSubject(student.subject)
+	
 
 		studentList.push(studentUpdated);
-		emit("sendData", studentList, "changeColorSubject(student.subject)");
+		emit("sendData", studentList);
 
 		clearValueInputs();
 	};
@@ -102,7 +100,6 @@
 
 		<select
 			v-model="student.subject"
-			:class="{ yellow: mathSubject, blue: historySubject, verde: chemistrySubject}"
 			class="form__select form__select-title"
 			name="subject"
 			id="subject"
@@ -118,6 +115,8 @@
 			<option class="option">History</option>
 			<option class="option">Math</option>
 			<option class="option">Chemistry</option>
+			<option class="option">Music</option>
+			<option class="option">Physical Education</option>
 		</select>
 		<span
 			v-for="error in v$.subject.$errors"
@@ -181,7 +180,7 @@
 			color: map-get(c.$colors, "white");
 
 			.option {
-				background: map-get(c.$colors, "blue-electric");
+				background: map-get(c.$colors, "grey");
 			}
 		}
 
@@ -210,18 +209,6 @@
 
 		.error-red {
 			color: red;
-		}
-
-		.verde{
-			color:green;
-		}
-
-		.yellow{
-			color: yellow;
-		}
-
-		.blue{
-			color:blue;
 		}
 	}
 </style>
