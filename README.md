@@ -1,12 +1,13 @@
 # School-grades
 
-This project is a converter in which to indicate a numerical grade and it returns a grade in text format (outstanding, insufficient...)
+This project is a converter in which to indicate a numerical grade and it returns a grade in text format (outstanding, insufficient...).
+Change the color of the text depends on the subject and the grade obtained.
 
 ## Resultado
 ![image](https://user-images.githubusercontent.com/116892825/210255050-d8ff692d-22c3-44c7-b940-bf5b3dbc4fcc.png)
 
 ## Resultado interactivo
-![image](https://user-images.githubusercontent.com/116892825/210255236-a32d20c6-eee1-4da9-8831-393b69a409c5.png)
+![image](https://user-images.githubusercontent.com/116892825/210776536-59090409-854e-4905-a37d-549f29e0c9cc.png)
 
 ### Herramientas utilizadas
 - HTML5 (Metodología BEM)
